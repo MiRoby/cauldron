@@ -1,0 +1,12 @@
+ {% extends 'base.html.twig' %}
+
+ {% block title %}Question: {{question}} {% endblock %}
+ {# opisy #}
+  
+ {% block body %}
+    <ul>
+    {% for answer in answers %}
+        <li>{{answer|length}}</li> {#|dodaj filtr np. length #}
+    {% endfor %} 
+    </ul>   
+ {% endblock %}   
