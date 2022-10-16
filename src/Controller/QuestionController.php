@@ -10,6 +10,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 use App\Service\MarkdownHelper;
 use Psr\Log\LoggerInterface;
 use Twig\Environment;
+use Sentry\State\HubInterface;
 
 class QuestionController extends AbstractController
 {
@@ -31,7 +32,7 @@ class QuestionController extends AbstractController
     }   
 
     #[Route('/questions/{slug} ', name:'app_question_show')]
-    public function show($slug, MarkdownHelper $markdownHelper, bool $isDebug)
+    public function show($slug, MarkdownHelper $markdownHelper, bool $isDebug, HubInterface $sentryHub)
     {
         $questionText = 'I\'ve been turned into a cat, any *thoughts* on how to turn back? While I\'m **adorable**, I don\'t really care for cat food.'; // **formatowanie
         
@@ -39,10 +40,13 @@ class QuestionController extends AbstractController
        //     return $markdownParser->transformMarkdown($questionText);
         //}); // cache w pamięci podręcznej
        // $parsedQuestionText = $markdownParser->transformMarkdown($questionText); //transformuje '**' buduje znaczniki HTML
-        
+        dump($sentryHub->getClient());
+
         if ($this->isDebug){
-                $this->logger->info('Jestem w trybie debugowania!'); #Jestem w trybie debugowania!;
+                $this->logger->info('We are in debug mode!'); #Jestem w trybie debugowania!;
         }
+
+        //throw new \Exception('bad stuff happened!');
       
         //dump($isDebug);   
         //dump($this->getParameter('cache_adapter'));
